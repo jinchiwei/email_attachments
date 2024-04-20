@@ -1,4 +1,4 @@
-name: letters
+name: pyemail
 channels:
   - defaults
   - conda-forge
