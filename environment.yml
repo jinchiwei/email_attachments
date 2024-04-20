@@ -1,0 +1,13 @@
+name: letters
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python
+  - pandas
+  - numpy
+  - openpyxl
+  - tqdm
+  - ipykernel
+  # - pip:
+  #     - loremipsum
