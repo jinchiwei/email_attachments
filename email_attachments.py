@@ -6,6 +6,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase 
 from email import encoders 
 
+import numpy as np
 import os
 import pandas as pd
 from tqdm.auto import tqdm
@@ -65,6 +66,7 @@ def main():
     sender_address, sender_password = read_credentials()
 
     for receiver_address in tqdm(emails):
+        receiver_name = names[emails.index(receiver_address)]
 
         # instance of MIMEMultipart 
         msg = MIMEMultipart() 
@@ -78,6 +80,12 @@ def main():
         files_dir = pathlib.Path(r'attachments')
         filepaths = list(files_dir.glob('*'))
         filenames = [file_path.name for file_path in filepaths if file_path.is_file()]
+
+        if df_sent[df_sent['email'] == receiver_address].index.size == 0:
+            new_row = pd.DataFrame(
+                {'name': receiver_name, 'email': receiver_address, 'sent_files': np.nan},
+                index=[df_sent.index.max() + 1])
+            df_sent = pd.concat([df_sent, new_row], ignore_index=True)
 
         index = df_sent[df_sent['email'] == receiver_address].index[0]  # df row of recipient
         already_sent = df_sent.at[index, 'sent_files']
@@ -134,7 +142,7 @@ def main():
         text = msg.as_string()
 
         # send email
-        s.sendmail(sender_address, receiver_address, text)
+        # s.sendmail(sender_address, receiver_address, text)
 
         # terminate session
         s.quit()
