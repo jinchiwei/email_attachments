@@ -142,7 +142,7 @@ def main():
         text = msg.as_string()
 
         # send email
-        # s.sendmail(sender_address, receiver_address, text)
+        s.sendmail(sender_address, receiver_address, text)
 
         # terminate session
         s.quit()
