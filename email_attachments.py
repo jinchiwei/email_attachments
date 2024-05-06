@@ -94,7 +94,7 @@ def main():
         if pd.isna(already_sent):
             selected = sample_attachments(filenames, num_samples=3)
             # if sent loops is NaN, create new list
-            updated_sent = ','.join(selected)
+            updated_sent = ', '.join(selected)
             dict_sent[receiver_address] = selected
         else:
             selected = sample_attachments(filenames, dict_sent[receiver_address].split(', '), num_samples=3)
